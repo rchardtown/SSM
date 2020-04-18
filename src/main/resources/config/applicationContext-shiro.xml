@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans">
+	<!-- ||||||||||||||||||||||||||||||||||||| step:2 |||||||||||||||||||||||||||||||||||||【start】 -->
+
+	<!-- step1设置好了shiro工作的框架，但是关于核心管理对象SecurityManager 
+	没有指明具体是哪个类的bean,step2指明 -->
+
+	<bean id="securityManager"
+		class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<!-- securityManager 对象依赖于 认证域：shiroDBRealm -->
+		<!-- shiroDBRealm:才是认证的核心 ，需要自己来写shiroDBRealm对应的类 -->
+		<property name="realm" ref="shiroDBRealm" />
+		<!-- 备注：ref 肯定有一个bean 的bean的id （实质是bean）作为他的值。
+			有两种处理方式：
+			1）是写一个<bean > 对应着。
+			2）用component注解的方式给ref 赋值<==>  bean 组件
+			如：@component("shiroDBRealm") 这里的@component相当于<bean>,shiroDBRealm 相当于bean的id,底下的类
+			相当于 <bean>中的class
+		 -->
+	</bean>
+	<!-- ||||||||||||||||||||||||||||||||||||| step:2 |||||||||||||||||||||||||||||||||||||【end】 -->
+
+	<!-- ||||||||||||||||||||||||||||||||||||| step:1 |||||||||||||||||||||||||||||||||||||【start】 -->
+	<!-- ***************shiro的核心配置bean [start]*************** -->
+	<!-- 机制：web.xml启动后，所有请求通过shiro的filter 进入shiro的类: 1 创建了shiro的生命周期：targetFilterLifecycle 
+		2关联到了shiro的bean ,所有的请求都会交给这个bean 来先做处理 -->
+	<!-- id:的值与web.xml 中shiro 过滤器的<filter-name>标签的值保持一致 -->
+	<!-- Shiro核心过滤bean，所有的请求都会交给该bean进行处理 [BEGIN] -->
+	<bean id="shiroFilter"
+		class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<!-- 在创建shiroFilter 对象的时，需要四个依赖注入 -->
+		<!-- 第一个：shiro框架的核心管理对象SecurityManager -->
+		<property name="securityManager" ref="securityManager" />
+		<!-- 第二个：shiro登录认证的地址 -->
+		<property name="loginUrl" value="/user/login" />
+		<!-- 第三个：登录成功后，对那些登陆前没有地址，或者url本来就是登录地址的，给定默认的重定向地址 -->
+		<property name="successUrl" value="/" />
+		<!-- 第四个：设置登录认证规则 -->
+		<property name="filterChainDefinitions">
+			<value>
+				<!-- 需要特别注意的是，认证的顺序是从上到下匹配，如果一旦匹配上，将使用该规则， 对于Shiro来说，提供了如下的内置规则： anon 
+					- 可以匿名使用 authc - 需要认证才能使用 logout - 表示进行退出 authcBasic - 没有参数表示httpBasic认证 
+					perms - 授权 port - 当请求的url的端口不是8081是跳转到schemal://serverName:8081?queryString 
+					rest - 根据请求的方法 roles - 角色 ssl - 表示安全的url请求 user - 表示必须存在用户 -->
+				/static/** = anon
+				/user/logout = logout
+				/** = authc
+			</value>
+		</property>
+	</bean>
+	<!-- Shiro核心过滤bean，所有的请求都会交给该bean进行处理 [BEGIN] -->
+	<!-- ||||||||||||||||||||||||||||||||||||| step:1 |||||||||||||||||||||||||||||||||||||【end】 -->
+
+</beans>

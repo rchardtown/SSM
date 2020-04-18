@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	id="WebApp_ID" version="3.1">
+	<!-- ===========================准备工作=========================== -->
+	<!-- 首先，加载出spring框架的核心配置文件位置 【start】 -->
+	<context-param>
+		<!-- key： 固定写法 -->
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			<!-- spring 核心配置文件 -->
+			classpath*:/applicationContext.xml
+			<!-- spring 附加配置文件：用于减轻spring核心配置文件压力.这两个文件都隶属于sprig的配置文件，是并列关系 -->
+			classpath*:/applicationContext-config.xml
+		</param-value>
+	</context-param>
+	<!-- 首先，加载出spring框架的核心配置文件位置 【end】 -->
+	<!-- 其次，进行监听，向上监听web容器启动(spring mvc)，向下监听spring容器启动 【start】 -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<!-- 其次，进行监听，向上监听web容器启动，向下监听spring容器启动 【end】 -->
+	<!-- 监听其他框架（容器）【start】 -->
+	<listener>
+		<!-- 监听Request对象 -->
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+	<!-- 监听其他框架（容器）【end】 -->
+	<!-- ===========================springMVC 自己的工作=========================== -->
+	<!-- 首先，配置springMVC核心配置:servlet【start】 -->
+	<servlet>
+		<servlet-name>springMVC</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!-- 只要大于0，就可以使得servlet实例化的时间提前到和web容器同时启动 -->
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>springMVC</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	<!-- 首先，配置springMVC核心配置:servlet【end】 -->
+	<!-- 其次，配置springMVC辅助配置:filter【start】 -->
+	<!-- 编码过滤器 -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- shiro过滤器 -->
+	<filter>
+		<filter-name>shiroFilter</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<init-param>
+			<!-- shiro初始化时使用shiro自己的生命周期管理方案 -->
+			<param-name>targetFilterLifecycle</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>shiroFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- 其次，配置springMVC辅助配置:filter【end】 -->
+</web-app>

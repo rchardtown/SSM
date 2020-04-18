@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>cn.ekgc.spirng</groupId>
+	<artifactId>dkscm</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
+		<spring.context.version>5.2.3.RELEASE</spring.context.version>
+		<spring.aop.version>5.2.3.RELEASE</spring.aop.version>
+		<jdbc.version>5.2.3.RELEASE</jdbc.version>
+		<mybatis.version>3.5.4</mybatis.version>
+		<mybatis-spring.version>2.0.3</mybatis-spring.version>
+		<mysql-connector-java.version>8.0.19</mysql-connector-java.version>
+		<spring-webmvc.version>5.2.3.RELEASE</spring-webmvc.version>
+		<javax.servlet-api.version>4.0.1</javax.servlet-api.version>
+		<javax.servlet.jsp-api.version>2.3.3</javax.servlet.jsp-api.version>
+		<jackson-databind.version>2.10.2</jackson-databind.version>
+		<jstl.version>1.2</jstl.version>
+		<shiro-spring.version>1.5.1</shiro-spring.version>
+	</properties>
+
+	<dependencies>
+
+		<!-- ******************************springMVC 依赖 ,开始 ****************************** -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring-webmvc.version}</version>
+		</dependency>
+		<!-- servlet 和JSP 依赖【start】 -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${javax.servlet-api.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>javax.servlet.jsp-api</artifactId>
+			<version>${javax.servlet.jsp-api.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- servlet 和JSP 依赖【end】 -->
+		<!-- ******************************springMVC 依赖 ,结束 ****************************** -->
+
+		<!-- ******************************spring 接管Mybatis ,开始 ****************************** -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${jdbc.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>${mybatis.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>${mybatis-spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql-connector-java.version}</version>
+		</dependency>
+		<!-- 数据库连接池，提交数据库的并发性能 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>1.1.21</version>
+		</dependency>
+		<!-- ******************************spring 接管Mybatis ,结束 ****************************** -->
+		<!-- ****************************** java WEB ,开始 ****************************** -->
+		<!-- Jackson 进行json数据格式化 【start】 -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson-databind.version}</version>
+		</dependency>
+		<!-- Jackson 进行json数据格式化 【end】 -->
+		<!-- JSTL 【start】 -->
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>${jstl.version}</version>
+		</dependency>
+		<!-- JSTL 【end】 -->
+		<!-- shiro-spring【start】 -->
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-spring</artifactId>
+			<version>${shiro-spring.version}</version>
+		</dependency>
+		<!-- shiro-spring【end】 -->
+
+		<!-- ****************************** java WEB ,结束 ****************************** -->
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>jsr250-api</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+
+
+	</dependencies>
+
+	<build>
+		<finalName>dkscm</finalName>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>3.0.0</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>3.0.2</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.7.0</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.20.1</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>3.2.0</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-install-plugin</artifactId>
+					<version>2.5.2</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>2.8.2</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

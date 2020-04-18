@@ -1,0 +1,22 @@
+.table th, .table td {
+
+vertical-align: middle!important;
+}
+.modal-footer{
+	text-align: right !important;
+}
+
+.modal-footer a:nth-child(1){
+	color: #3ea2ee;
+	border: 1px solid #3ea2ee;
+}
+
+.modal-footer a:nth-child(2){
+	color: #fff;
+	background: #3ea2ee !important;
+}
+
+.modal-footer a:nth-child(2):hover{
+	color: #fff;
+	background: #3ea2ee !important;
+}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+							http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- 如果有其他的框架和spring 结合，那么该框架也会有自己的配置文件，为了让spring能够加载到该配置文件， 而且不至于spring的核心配置文件过大， 
+		采用该文件导入别的文件。当spring 容器加载的时候， 会通过该文件将其他框架的配置导入spring的核心配置文件 applicationContext.xml中 -->
+
+	<import resource="config/applicationContext-shiro.xml"/>
+</beans>
